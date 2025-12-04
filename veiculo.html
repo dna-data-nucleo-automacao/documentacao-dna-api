@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Veículos | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🚗 Rotas de Veículo</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Dados do Veículo com Múltiplos Filtros</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/veiculo/?page=:Pagina&limit=:Quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>placa</code> - Placa do veículo</li>
+                    <li><code>codprop</code> - Código do proprietário</li>
+                    <li><code>modelo</code> - Modelo do veículo</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo 1 - Busca por Placa:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/veiculo/?page=1&limit=10&plate=xxx 1234
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo 2 - Busca por Proprietário e Modelo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/veiculo/?page=1&limit=10&codprop=10&model=gol
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Marca e Modelo por Descrição</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/veiculomodelo/?page=:Pagina&limit=:Quantidade&description=:descricao
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>description</code> - Descrição do modelo</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

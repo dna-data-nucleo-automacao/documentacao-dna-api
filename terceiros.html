@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - APIs Terceiras | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🔍 Rotas de APIs Terceiras</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Consulta de CNPJ</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/cnpj/:cnpj
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:cnpj</code> - CNPJ a ser consultado</li>
+                </ul>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>Limite de 3 consultas por minuto.</p>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/cnpj/12345678000199
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Consulta de CEP (Por CEP)</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/cep/:cep
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:cep</code> - CEP a ser consultado</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/cep/95020000
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Consulta de CEP (Sem CEP)</h2>
+            <p><span class="method method-post">POST</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/cep
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros do Body:</strong>
+                <ul>
+                    <li><code>tipologradouro</code> - Tipo do logradouro (rua, avenida, etc.)</li>
+                    <li><code>logradouro</code> - Nome do logradouro</li>
+                    <li><code>cidade</code> - Nome da cidade</li>
+                    <li><code>uf</code> - Estado (UF)</li>
+                    <li><code>bairro</code> - Bairro (opcional)</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo de Body JSON:</strong>
+                <div class="endpoint-route">
+{
+  "tipologradouro": "rua",
+  "logradouro": "julio",
+  "cidade": "caxias",
+  "uf": "rs",
+  "bairro": "centro"
+}
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>O campo "bairro" é opcional.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

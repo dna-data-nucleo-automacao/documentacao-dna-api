@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Produtos | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>📦 Rotas de Produto</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Produtos com Múltipla Filtragem</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/produto/?page=:pagina&limit=:quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>descricao</code> - Descrição do produto</li>
+                    <li><code>inativo</code> - S ou N</li>
+                    <li><code>codalternativo</code> - Código alternativo</li>
+                    <li><code>codigo</code> - Código do produto</li>
+                    <li><code>codbarras</code> - Código de barras</li>
+                    <li><code>ncm</code> - Código NCM</li>
+                    <li><code>cest</code> - Código CEST</li>
+                    <li><code>estoque</code> - Quantidade em estoque</li>
+                    <li><code>cimportado</code> - S ou N (Importado)</li>
+                    <li><code>tipo</code> - "mao de obra" ou "peca"</li>
+                    <li><code>imposto</code> - Descrição do imposto</li>
+                    <li><code>fornecedor</code> - Razão social do fornecedor</li>
+                    <li><code>grupo</code> - Descrição do grupo</li>
+                    <li><code>subgrupo</code> - Descrição do subgrupo</li>
+                    <li><code>marca</code> - Descrição da marca</li>
+                    <li><code>codnum</code> - Código numérico</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/produto/?page=1&limit=10&description=chicote
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Produtos Similares</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/similares/?page=:pagina&limit=:quantidade&codigo=:codigo_peca
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>codigo</code> - Código da peça para buscar similares</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/similares/?page=1&limit=10&codigo=12345
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

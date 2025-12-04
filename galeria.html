@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Galeria | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🖼️ Rotas de Galeria</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Cadastro de Arquivos</h2>
+            <p><span class="method method-post">POST</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/galeria
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros do Body:</strong>
+                <ul>
+                    <li><code>nome_pasta</code> - Nome da pasta</li>
+                    <li><code>id_pasta</code> - ID do registro</li>
+                    <li><code>imagens</code> - Array de imagens com extension e base64</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo de Body JSON:</strong>
+                <div class="endpoint-route">
+{
+  "nome_pasta": "veiculo",
+  "id_pasta": "30",
+  "imagens": [
+    {
+      "extension": "png",
+      "base64": "base64 da foto1"
+    },
+    {
+      "extension": "pdf",
+      "base64": "base64 da foto2"
+    }
+  ]
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Consulta de Arquivos</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/galeria/:nome_pasta/:id_pasta
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:nome_pasta</code> - Subpasta de Galeria que deseja entrar</li>
+                    <li><code>:id_pasta</code> - Subpasta de nome_pasta</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/galeria/veiculo/30
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Exclusão de Arquivos</h2>
+            <p><span class="method method-delete">DELETE</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/galeria/?nome_pasta=:nome_pasta&id_pasta=:id_pasta&nome_arquivos=:nome_arquivos
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>nome_pasta</code> - Subpasta de Galeria que deseja entrar</li>
+                    <li><code>id_pasta</code> - Subpasta de nome_pasta</li>
+                    <li><code>nome_arquivos</code> - Nomes dos arquivos separados por vírgula</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/galeria/?nome_pasta=veiculo&id_pasta=30&nome_arquivos=arquivo1,arquivo2,arquivo3
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Importante:</strong>
+                <p>NÃO dar espaço entre as vírgulas nos nomes dos arquivos.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

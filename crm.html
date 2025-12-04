@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - CRM | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>💼 Rotas de CRM</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Consulta de CRM Capa</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/crm?page=:pagina&limit=:quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>razao</code> - Razão social do cliente</li>
+                    <li><code>fantasia</code> - Nome fantasia do cliente</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/crm?page=1&limit=10&razao=Empresa LTDA
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Consulta de CRM Itens</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/itemcrm?page=:pagina&limit=:quantidade&filtro1=:filtro1
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>codigo_crm</code> - Código do CRM</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/itemcrm?page=1&limit=10&codigo_crm=123
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

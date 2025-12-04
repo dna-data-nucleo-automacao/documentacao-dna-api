@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Fornecedores | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🏢 Rotas de Fornecedor</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Todos Fornecedores ou por Razão Social</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/fornecedor/?page=:pagina&limit=:quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>cidade</code> - Cidade do fornecedor</li>
+                    <li><code>razao</code> - Razão social</li>
+                    <li><code>nome</code> - Nome fantasia</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/fornecedor/?page=1&limit=10&razao=Autopeças&cidade=Caxias
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Firebase | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🔥 Rotas do Firebase</h1>
+        </header>
+
+        <div class="note" style="margin-bottom: 30px;">
+            <strong>Informação:</strong>
+            <p>CRUD completo para <strong>EMPRESA</strong> e <strong>USUARIO</strong>.</p>
+        </div>
+
+        <section class="endpoint">
+            <h2>Cadastro (Empresa ou Usuário)</h2>
+            <p><span class="method method-post">POST</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/cloud/:tipo
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tipo</code> - "empresa" ou "usuario"</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Body da requisição EMPRESA:</strong>
+                <div class="endpoint-route">
+{
+  "razaosoc": "RAZAO SOCIAL DA EMPRESA"
+}
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>Body da requisição USUARIO:</strong>
+                <div class="endpoint-route">
+{
+  "nome": "NOME DO USUARIO",
+  "cpf": "CPF DO USUARIO",
+  "id_empresa": "ID_EMPRESA"
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Busca (Empresa ou Usuário)</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/cloud/:tipo/:id
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tipo</code> - "empresa" ou "usuario"</li>
+                    <li><code>:id</code> - ID_EMPRESA ou ID_USUARIO</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/cadastro/cloud/empresa/abc123
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Remoção (Empresa ou Usuário)</h2>
+            <p><span class="method method-delete">DELETE</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/cloud/:tipo/:id
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tipo</code> - "empresa" ou "usuario"</li>
+                    <li><code>:id</code> - ID_EMPRESA ou ID_USUARIO</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/cadastro/cloud/usuario/xyz789
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Atualização (Empresa ou Usuário)</h2>
+            <p><span class="method method-patch">PATCH</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/cloud/:tipo
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tipo</code> - "empresa" ou "usuario"</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo de Body (deve conter o ID do documento e os campos a editar):</strong>
+                <div class="endpoint-route">
+{
+  "id": "abc123",
+  "razaosoc": "NOVA RAZAO SOCIAL"
+}
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>O body da requisição para AMBOS deve conter o ID do documento e os campos que deseja editar.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

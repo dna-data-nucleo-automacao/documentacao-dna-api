@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - IBGE | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🗺️ Rotas de IBGE</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Consulta de IBGE</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/ibge/?page=:pagina&limit=:quantidade&cidade=:cidade
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>cidade</code> - Nome da cidade</li>
+                    <li><code>ibge</code> - Código IBGE (alternativo)</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo - Busca por Cidade:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/ibge/?page=1&limit=100&cidade=caxias
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo - Busca por Código IBGE:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/ibge/?page=1&limit=100&ibge=4305108
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>A consulta é feita no BANCO_PADRAO.FDB. Se tiver utilidade, é possível pesquisar diretamente pelo código IBGE substituindo o parâmetro 'cidade' por 'ibge'.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

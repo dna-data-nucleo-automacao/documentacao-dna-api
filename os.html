@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Ordem de Serviço | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🔧 Rotas de Ordem de Serviço</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>OS com Múltiplos Filtros</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/os/capa/?page=:pagina&limit=:quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>mecanico</code> - Nome do mecânico</li>
+                    <li><code>placa</code> - Placa do veículo</li>
+                    <li><code>numos</code> - Número da OS</li>
+                    <li><code>situacao_inicio</code> e <code>situacao_fim</code> + <code>tipo_data</code> (ABERTURA ou SITUACAO)</li>
+                    <li><code>situacao</code> - Situação da OS</li>
+                    <li><code>tipoos</code> - Tipo da OS</li>
+                    <li><code>modelo</code> - Modelo do veículo</li>
+                    <li><code>tipo_cliente</code> - F (Física) ou J (Jurídica)</li>
+                    <li><code>proprietario</code> - Nome do cliente</li>
+                    <li><code>dinamico</code> - Parte do modelo e/ou placa</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/os/capa/?page=1&limit=20&plate=XXX 1234&mechanic=Rogerio
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Cadastro de OS Completa (CAPA + ITENS)</h2>
+            <p><span class="method method-post">POST</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/os/completa
+            </div>
+            
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>Esta rota é utilizada apenas para O.S feita do "zero". O body deve conter a capa da OS e um array de itens.</p>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo de JSON:</strong>
+                <div class="endpoint-route">
+{
+  "capa": {
+    "placa": "XXX1234",
+    "codprop": 10,
+    "mecanico": 1,
+    "tipoos": 1,
+    "situacao": 1
+  },
+  "itens": [
+    {
+      "codigo_peca": 100,
+      "quantidade": 2,
+      "valor_unitario": 50.00
+    },
+    {
+      "codigo_peca": 101,
+      "quantidade": 1,
+      "valor_unitario": 150.00
+    }
+  ]
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Alteração de OS Completa (CAPA + ITENS)</h2>
+            <p><span class="method method-put">PUT</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/os/completa/:codigo_da_OS
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:codigo_da_OS</code> - Código da OS a ser alterada</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo de JSON:</strong>
+                <div class="endpoint-route">
+{
+  "capa": {
+    "mecanico": 2,
+    "situacao": 3
+  },
+  "itens": [
+    {
+      "codigo": 1,
+      "quantidade": 3,
+      "valor_unitario": 55.00
+    }
+  ]
+}
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

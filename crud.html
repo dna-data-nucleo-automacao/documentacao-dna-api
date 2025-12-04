@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - CRUD | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>⚙️ Funcionamento Geral do CRUD</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Alteração de Registro (PUT)</h2>
+            <p><span class="method method-put">PUT</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/:tabela/:id
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tabela</code> - Nome da tabela</li>
+                    <li><code>:id</code> - ID do registro a ser alterado</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo - Alterar Cliente:</strong>
+                <p>Rota: <code>BaseRoute/cadastro/CLIENTE/1</code></p>
+                <p>Body JSON:</p>
+                <div class="endpoint-route">
+{
+  "codigo": 2,
+  "nome": "fulano das tantas",
+  "cpf": "00000000000"
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Criação de Registro (POST)</h2>
+            <p><span class="method method-post">POST</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/:tabela
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tabela</code> - Nome da tabela</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo - Criar Cliente:</strong>
+                <p>Rota: <code>BaseRoute/cadastro/Cliente</code></p>
+                <p>Body JSON:</p>
+                <div class="endpoint-route">
+{
+  "nome": "beltrano das quantas",
+  "cpf": "11111111111",
+  "rua": "av. do ping pong"
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Exclusão de Registro (DELETE)</h2>
+            <p><span class="method method-delete">DELETE</span></p>
+            <div class="endpoint-route">
+                BaseRoute/cadastro/:tabela/:id
+            </div>
+            
+            <div class="filters">
+                <strong>Parâmetros:</strong>
+                <ul>
+                    <li><code>:tabela</code> - Nome da tabela</li>
+                    <li><code>:id</code> - ID do registro a ser deletado</li>
+                </ul>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                Não é necessário enviar nada no body da requisição.
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Tabelas Disponíveis para CRUD</h2>
+            
+            <div class="table-list">
+                <span class="table-tag">veiculo</span>
+                <span class="table-tag">cilindrada</span>
+                <span class="table-tag">marca</span>
+                <span class="table-tag">veiculo_cambio</span>
+                <span class="table-tag">modelo</span>
+                <span class="table-tag">combustivel</span>
+                <span class="table-tag">veiculo_motor</span>
+                <span class="table-tag">veiculo_tracao</span>
+                <span class="table-tag">veiculo_freio</span>
+                <span class="table-tag">cor</span>
+                <span class="table-tag">cliente</span>
+                <span class="table-tag">cliente_contato</span>
+                <span class="table-tag">licenca</span>
+                <span class="table-tag">documento</span>
+                <span class="table-tag">mecanico</span>
+                <span class="table-tag">itos</span>
+                <span class="table-tag">os</span>
+                <span class="table-tag">genero</span>
+                <span class="table-tag">familia</span>
+                <span class="table-tag">similares</span>
+                <span class="table-tag">usuario</span>
+                <span class="table-tag">marcas</span>
+                <span class="table-tag">agenda</span>
+                <span class="table-tag">peca</span>
+                <span class="table-tag">situacao</span>
+                <span class="table-tag">tipoos</span>
+                <span class="table-tag">crm_chamado</span>
+                <span class="table-tag">crm_chamado_item</span>
+            </div>
+
+            <div class="note">
+                <strong>Importante:</strong>
+                <ul>
+                    <li>É necessário verificar no banco de dados quais campos são de preenchimento obrigatório</li>
+                    <li>Qualquer erro será retornado no response da API com os campos faltantes</li>
+                    <li>Os nomes dos campos para cadastro do CRUD são exatamente os mesmos do banco de dados</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

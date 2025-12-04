@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Clientes | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>👤 Rotas de Cliente</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Cliente + Contatos</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/cliente/?page=:pagina&limit=:quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>nome</code> - Nome do cliente</li>
+                    <li><code>codigo</code> - Código do cliente</li>
+                    <li><code>razaosoc</code> - Razão social</li>
+                    <li><code>data_inicio</code> e <code>data_fim</code> + <code>tipo_data</code> (ABERTURA ou ATUALIZACAO)</li>
+                    <li><code>tipo_cliente</code> - F (Física) ou J (Jurídica)</li>
+                    <li><code>sexo</code> - M (Masculino) ou F (Feminino)</li>
+                    <li><code>email</code> - E-mail do cliente</li>
+                    <li><code>bairro</code> - Bairro</li>
+                    <li><code>cidade</code> - Cidade</li>
+                    <li><code>uf</code> - Estado (UF)</li>
+                    <li><code>idadeinicial</code> e <code>idadefinal</code> - Faixa de idade (funciona com ambos ou apenas 1)</li>
+                    <li><code>inativo</code> - S ou N</li>
+                </ul>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>Buscar com 'ltda' no nome trará todos os clientes PESSOA JURÍDICA.</p>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/cliente/?page=1&limit=10&nome=João&cidade=São Paulo
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

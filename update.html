@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Update | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>🔄 Rotas de Update</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Verifica Requisições Recentes</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/usando
+            </div>
+            
+            <div class="filters">
+                <strong>Descrição:</strong>
+                <p>Verifica se houveram requisições nos últimos 60 segundos.</p>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo de Resposta:</strong>
+                <div class="endpoint-route">
+{
+  "em_uso": true,
+  "ultima_requisicao": "2024-01-15T10:30:00"
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Atualizar API</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/atualiza
+            </div>
+            
+            <div class="filters">
+                <strong>Descrição:</strong>
+                <p>Executa o arquivo .bat para atualizar a API.</p>
+            </div>
+
+            <div class="note">
+                <strong>Observação:</strong>
+                <p>É necessário ter o arquivo .bat configurado corretamente para que a atualização funcione.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Itens de OS | DNA API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar</a>
+        
+        <header>
+            <h1>📋 Rotas de Itens de OS</h1>
+        </header>
+
+        <section class="endpoint">
+            <h2>Itens de OS com Múltiplos Filtros</h2>
+            <p><span class="method method-get">GET</span></p>
+            <div class="endpoint-route">
+                BaseRoute/consulta/os/itens/?page=:pagina&limit=:quantidade&filtro1=:filtro1&filtro2=:filtro2
+            </div>
+            
+            <div class="filters">
+                <strong>Filtros disponíveis para busca:</strong>
+                <ul>
+                    <li><code>placa</code> - Placa do veículo</li>
+                    <li><code>codprop</code> - Código do proprietário</li>
+                    <li><code>numos</code> - Número da OS</li>
+                    <li><code>descricao</code> - Descrição do item</li>
+                    <li><code>situacao_inicio</code> e <code>situacao_fim</code> + <code>tipo_data</code> (ABERTURA ou SITUACAO)</li>
+                    <li><code>tipoos</code> - Tipo da OS</li>
+                    <li><code>situacao</code> - Situação da OS</li>
+                    <li><code>mecanico</code> - Nome do mecânico</li>
+                    <li><code>fornecedor</code> - Razão social do fornecedor</li>
+                    <li><code>pecamo</code> - PECA ou MO (Mão de Obra)</li>
+                    <li><code>proprietario</code> - Nome do proprietário</li>
+                    <li><code>codigopeca</code> - Código da peça</li>
+                    <li><code>codalternativo</code> - Código alternativo</li>
+                    <li><code>grupo</code> - Descrição do grupo</li>
+                    <li><code>subgrupo</code> - Descrição do subgrupo</li>
+                    <li><code>marca</code> - Descrição da marca</li>
+                    <li><code>cimportado</code> - S ou N (Importado)</li>
+                    <li><code>ncm</code> - Código NCM</li>
+                    <li><code>cest</code> - Código CEST</li>
+                    <li><code>codbarras</code> - Código de barras</li>
+                    <li><code>cfop</code> - Código CFOP</li>
+                    <li><code>monofasicos</code> - Monofásicos</li>
+                    <li><code>garantias</code> - F, E ou C</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo - Busca por Placa e Descrição:</strong>
+                <div class="endpoint-route">
+BaseRoute/consulta/os/itens/?page=1&limit=10&plate=xxx 1234&description=ratinho metal
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
