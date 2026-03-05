@@ -1,0 +1,10 @@
+/* Simple login styles */
+:root{--bg:#f6f8fa;--card:#ffffff;--accent:#0b74de;--muted:#666}
+html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);}
+.login-wrap{display:flex;align-items:center;justify-content:center;height:100vh}
+.login-box{background:var(--card);padding:28px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.08);width:320px}
+.login-box h2{margin:0 0 12px 0;text-align:center}
+.login-box label{display:block;font-size:13px;margin-top:8px;color:var(--muted)}
+.login-box input{width:100%;padding:10px;margin-top:6px;border:1px solid #ddd;border-radius:4px;font-size:14px}
+.btn{width:100%;margin-top:14px;padding:10px;border:0;background:var(--accent);color:#fff;border-radius:4px;font-weight:600;cursor:pointer}
+.msg{color:#b00020;margin-top:10px;text-align:center;font-size:14px}

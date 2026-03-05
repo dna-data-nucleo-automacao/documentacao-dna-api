@@ -15,6 +15,7 @@
                     <p class="subtitle">Documentação completa da API</p>
                     <span class="version-badge">v25.12.A</span>
                 </div>
+                <button id="logoutBtn" class="login-button" style="position:absolute;right:20px;top:20px;padding:8px 12px;background:#dc3545;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;">Sair</button>
             </header>
 
             <section class="base-route-section">
@@ -56,6 +57,20 @@
                     <div class="card-icon">📋</div>
                     <h3>Itens de OS</h3>
                     <p>Gerenciar itens das ordens de serviço</p>
+                    <span class="card-arrow">→</span>
+                </a>
+
+                <a href="venda.html" class="route-card">
+                    <div class="card-icon">💰</div>
+                    <h3>Venda de Balcão</h3>
+                    <p>Gerenciamento completo de Venda de Balcão</p>
+                    <span class="card-arrow">→</span>
+                </a>
+
+                <a href="itemvenda.html" class="route-card">
+                    <div class="card-icon">🔖</div>
+                    <h3>Itens da Venda</h3>
+                    <p>Gerenciar itens das Vendas</p>
                     <span class="card-arrow">→</span>
                 </a>
 
@@ -152,5 +167,14 @@
             <p class="footer-small">Desenvolvido com ❤️ pela equipe DNA</p>
         </div>
     </footer>
+
+    <script>
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      fetch('/logout', { method: 'POST' })
+        .then(() => window.location.href = '/auth/login.html')
+        .catch(() => window.location.href = '/auth/login.html');
+    });
+    </script>
 </body>
 </html>

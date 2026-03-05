@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -14,6 +15,10 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cookie-parser": "^1.4.6"
+  },
   "bugs": {
     "url": "https://github.com/dna-data-nucleo-automacao/documentacao-dna-api/issues"
   },
