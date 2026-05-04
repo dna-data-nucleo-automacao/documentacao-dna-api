@@ -8,27 +8,13 @@
 **Linguagem:** Node.js / Express
 **Dependencias Principais:** express, cookie-parser
 
-## Autenticacao
+## Acesso a Documentacao
 
-O sistema utiliza autenticacao por cookie (httpOnly). As credenciais podem ser configuradas atraves das variaveis de ambiente:
-- LOGIN_USER: Usuario padrao (padrao: 'admin')
-- LOGIN_PASS: Senha padrao (padrao: 'password')
+O acesso a propria documentacao e feito pela pagina de login em /auth/login.html.
 
-### Endpoints de Autenticacao
+### Acesso Publico
 
-**Login**
-- Metodo: POST
-- Rota: /login
-- Body: { user, pass }
-- Resposta: Cookie dna_auth definido com maxAge de 1 hora
-
-**Logout**
-- Metodo: POST
-- Rota: /logout
-- Resultado: Cookie dna_auth limpo
-
-**Acesso Publico**
-- /auth/* (todas as paginas de autenticacao)
+- /auth/* (paginas de acesso da documentacao)
 - /env.js (variaveis de ambiente do cliente)
 
 ---
@@ -67,10 +53,10 @@ Exemplos:
 
 ### Marca e Modelo por Descricao
 
-**GET** - BaseRoute/consulta/veiculomodelo/?page=:Pagina&limit=:Quantidade&description=:descricao
+**GET** - BaseRoute/consulta/veiculomodelo/?page=:Pagina&limit=:Quantidade&descricao=:descricao
 
 Filtros disponveis:
-- description: Descricao do modelo
+- descricao: Descricao do modelo
 
 ---
 
@@ -139,7 +125,7 @@ Filtros disponveis:
 - marca: Descricao da marca
 - codnum: Codigo numerico
 
-Exemplo: BaseRoute/consulta/produto/?page=1&limit=10&description=chicote
+Exemplo: BaseRoute/consulta/produto/?page=1&limit=10&descricao=chicote
 
 ### Produtos Similares
 
@@ -260,7 +246,7 @@ Filtros disponveis:
 - monofasicos: Monofasicos
 - garantias: F, E ou C
 
-Exemplo: BaseRoute/consulta/os/itens/?page=1&limit=10&plate=xxx 1234&description=ratinho metal
+Exemplo: BaseRoute/consulta/os/itens/?page=1&limit=10&plate=xxx 1234&descricao=ratinho metal
 
 ---
 
