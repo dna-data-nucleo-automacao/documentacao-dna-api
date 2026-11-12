@@ -1,31 +1,40 @@
-// login.js - valida credenciais usando window.__ENV__ (exposto por /env.js)
+// login.js - envia as credenciais para o servidor validar (nada de senha no navegador)
 (function(){
   const form = document.getElementById('loginForm');
   const msg = document.getElementById('msg');
+  const btn = form.querySelector('button[type="submit"]');
 
   function safeTrim(s){return (s||'').toString().trim();}
+
+  function mostrar(texto){
+    msg.textContent = texto;
+    setTimeout(()=> msg.textContent = '', 4000);
+  }
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
     const user = safeTrim(document.getElementById('user').value);
-    const pass = safeTrim(document.getElementById('pass').value);
+    const pass = document.getElementById('pass').value;
 
-    // send credentials to server for verification
-    fetch('/login', {
+    btn.disabled = true;
+
+    // repassa o ?next= para voltar à página que o usuário tentou abrir
+    fetch('/login' + window.location.search, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify({ user, pass })
     }).then(async res => {
+      const body = await res.json().catch(()=>({}));
       if (res.ok) {
-        window.location.href = '../index.html';
+        window.location.href = body.next || '/index.html';
       } else {
-        const body = await res.json().catch(()=>({}));
-        msg.textContent = body.message || 'Usuário ou senha incorretos.';
-        setTimeout(()=> msg.textContent = '', 4000);
+        mostrar(body.message || 'Usuário ou senha incorretos.');
       }
     }).catch(()=>{
-      msg.textContent = 'Erro de conexão.';
-      setTimeout(()=> msg.textContent = '', 4000);
+      mostrar('Erro de conexão.');
+    }).finally(()=>{
+      btn.disabled = false;
     });
   });
 })();

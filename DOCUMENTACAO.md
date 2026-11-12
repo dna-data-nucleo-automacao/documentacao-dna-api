@@ -11,11 +11,22 @@
 ## Acesso a Documentacao
 
 O acesso a propria documentacao e feito pela pagina de login em /auth/login.html.
+Todas as paginas exigem login; sem sessao valida o usuario e redirecionado para o login.
+
+### Configuracao (variaveis de ambiente)
+
+- LOGIN_USER: usuario de acesso (obrigatorio).
+- LOGIN_PASS: senha de acesso (obrigatorio). Sem LOGIN_USER/LOGIN_PASS ninguem consegue entrar.
+- SESSION_SECRET: opcional. Chave para assinar o cookie de sessao. Se nao for definida, e derivada da senha (trocar a senha encerra todas as sessoes).
+- SESSION_HOURS: opcional. Duracao da sessao em horas (padrao 1).
+
+Rodar localmente: `npm install` e depois `npm start` com as variaveis definidas.
+Na Vercel: o vercel.json direciona todas as requisicoes para o servidor (server/server.js), entao nenhuma pagina e servida sem passar pelo login. Definir as variaveis em Settings > Environment Variables.
 
 ### Acesso Publico
 
-- /auth/* (paginas de acesso da documentacao)
-- /env.js (variaveis de ambiente do cliente)
+- /auth/login.html, /auth/login.css, /auth/login.js (pagina de login)
+- POST /login e POST /logout
 
 ---
 
@@ -162,30 +173,66 @@ Exemplo: BaseRoute/consulta/os/capa/?page=1&limit=20&plate=XXX 1234&mechanic=Rog
 
 **POST** - BaseRoute/cadastro/os/completa
 
-Observacao: Esta rota é utilizada apenas para O.S feita do "zero". O body deve conter a capa da OS e um array de itens.
+Observacao: Esta rota é utilizada apenas para O.S feita do "zero". O body deve conter a `capa` (array com UM objeto) e o array `itens` (pode ser vazio). Capa, itens, estoque e totais sao gravados numa unica transacao.
+
+Campos da capa:
+- placa ou veiculo: OBRIGATORIO (um dos dois). `veiculo` e o codigo do veiculo e tem prioridade. Placa aceita com espaco, hifen ou sem separador.
+- mecanico: opcional. Codigo ou nome do mecanico (ativo e habilitado para O.S).
+- tipoos: opcional. Codigo ou descricao do tipo de O.S. Padrao: GERAL.
+- situacao: opcional. No momento a API so cadastra O.S como "Orçamento" (valor assumido).
+- demais campos da O.S (kms, assunto, problema_relatado, aexecutar, obs1...): opcionais.
+
+Preenchidos pela API (nao enviar):
+- codprop, proprietario e carro: sempre vem do cadastro do veiculo (proprietario atual e modelo). Se enviados, sao ignorados.
+- codigo: proximo numero livre (mesma sequencia do sistema principal). Enviar gera erro.
+- abertura, dtsituacao, hrsituacao: data/hora atual quando nao informados.
+- totais da capa (valorpeca, valormo, valormost, descitens*, custoitens*): recalculados a partir dos itens.
+
+Campos de cada item:
+- descricao: OBRIGATORIO.
+- quant: OBRIGATORIO, maior que zero.
+- pecamo: OBRIGATORIO. A = peca, B = mao de obra.
+- unidade: ex. PC. Mao de obra (B) usa MO ou ST; peca (A) nao pode usar MO nem ST.
+- valunit: valor unitario.
+- pecacod: codigo da peca/servico. Omitir ou 0 para item avulso.
+- descval: desconto do item (opcional).
+- nao enviar id, numos, item, dtestoque nem usuario (preenchidos pela API).
 
 Exemplo de JSON:
 ```json
 {
-  "capa": {
-    "placa": "XXX1234",
-    "codprop": 10,
-    "mecanico": 1,
-    "tipoos": 1,
-    "situacao": 1
-  },
+  "capa": [
+    {
+      "placa": "IKJ 3847",
+      "mecanico": 1,
+      "tipoos": 1
+    }
+  ],
   "itens": [
     {
-      "codigo_peca": 100,
-      "quantidade": 2,
-      "valor_unitario": 50.00
+      "pecacod": 100,
+      "descricao": "FILTRO DE OLEO",
+      "pecamo": "A",
+      "unidade": "PC",
+      "quant": 2,
+      "valunit": 50.00
     },
     {
-      "codigo_peca": 101,
-      "quantidade": 1,
-      "valor_unitario": 150.00
+      "descricao": "TROCA DE OLEO",
+      "pecamo": "B",
+      "unidade": "MO",
+      "quant": 1,
+      "valunit": 80.00
     }
   ]
+}
+```
+
+Exemplo minimo:
+```json
+{
+  "capa": [ { "placa": "IKJ 3847" } ],
+  "itens": []
 }
 ```
 
@@ -196,22 +243,46 @@ Exemplo de JSON:
 Parametros:
 - :codigo_da_OS: Codigo da OS a ser alterada
 
+Header opcional:
+- X-Device-Id: identificador da sessao/dispositivo do app (checagem de concorrencia).
+
+Campos da capa:
+- alterou: true para gravar as alteracoes da capa. Sem ele, so os itens sao processados.
+- dtHrInicio: opcional (ISO 8601). Momento em que o app abriu a O.S. Se outro usuario alterou depois, retorna 409.
+- situacao: Em Execução, Orçamento, Aguardando Peça, Concluída ou Cancelada. Faturada nao e aceita (so pelo faturamento). Mudando a situacao sem dtsituacao, a data da situacao vira hoje; ao concluir, a data de entrega e preenchida se vazia.
+- mecanico e tipoos: codigo ou descricao (mesmas regras do cadastro).
+- veiculo, placa, codprop, proprietario e carro nao mudam depois de aberta a O.S (ignorados se enviados).
+
+Itens (cada um com `acao`):
+- "post": inclui item novo (mesmos campos do cadastro).
+- "put": altera o item do `id` informado (enviar so o que mudou).
+- "delete": exclui o item do `id` informado.
+- itens sem `acao` sao ignorados.
+
 Exemplo de JSON:
 ```json
 {
-  "capa": {
-    "mecanico": 2,
-    "situacao": 3
-  },
-  "itens": [
+  "capa": [
     {
-      "codigo": 1,
-      "quantidade": 3,
-      "valor_unitario": 55.00
+      "alterou": true,
+      "dtHrInicio": "2026-11-12T14:30:00",
+      "mecanico": 2,
+      "situacao": "Em Execução"
     }
+  ],
+  "itens": [
+    { "acao": "put", "id": 1534, "quant": 3, "valunit": 55.00 },
+    { "acao": "post", "descricao": "ALINHAMENTO", "pecamo": "B", "unidade": "ST", "quant": 1, "valunit": 120.00 },
+    { "acao": "delete", "id": 1535 }
   ]
 }
 ```
+
+Erros:
+- 400: O.S faturada, situacao invalida, item de outra O.S, mecanico/tipo invalidos, datas invalidas.
+- 404: O.S nao encontrada.
+- 406: O.S aberta em outro dispositivo.
+- 409: O.S alterada por outro usuario depois do dtHrInicio.
 
 ---
 

@@ -51,37 +51,98 @@ BaseRoute/consulta/os/capa/?page=1&limit=20&plate=XXX 1234&mechanic=Rogerio
             <div class="endpoint-route">
                 BaseRoute/cadastro/os/completa
             </div>
-            
+
             <div class="note">
                 <strong>Observação:</strong>
-                <p>Esta rota é utilizada apenas para O.S feita do "zero". O body deve conter a capa da OS e um array de itens.</p>
+                <p>Esta rota é utilizada apenas para O.S feita do "zero". O body deve conter a <code>capa</code> (array com <strong>um</strong> objeto) e o array <code>itens</code>, que pode ser vazio.</p>
+                <p>Capa, itens, estoque e totais são gravados numa única transação: se qualquer parte falhar, nada é gravado.</p>
+            </div>
+
+            <div class="filters">
+                <strong>Campos da capa:</strong>
+                <ul>
+                    <li><code>placa</code> ou <code>veiculo</code> - <strong>Obrigatório (um dos dois).</strong> Identifica o veículo. <code>veiculo</code> é o código do veículo e tem prioridade sobre <code>placa</code>. A placa é aceita com espaço, hífen ou sem separador (<code>IKJ 3847</code>, <code>IKJ-3847</code>, <code>IKJ3847</code>).</li>
+                    <li><code>mecanico</code> - Opcional. Código ou nome do mecânico. Precisa estar ativo e habilitado para O.S.</li>
+                    <li><code>tipoos</code> - Opcional. Código ou descrição do tipo de O.S. Se não for informado, assume <code>GERAL</code>.</li>
+                    <li><code>situacao</code> - Opcional. No momento a API só cadastra O.S como <code>"Orçamento"</code> (é o valor assumido quando não informado).</li>
+                    <li>Demais campos da O.S (ex.: <code>kms</code>, <code>assunto</code>, <code>problema_relatado</code>, <code>aexecutar</code>, <code>obs1</code>) são opcionais e gravados como enviados.</li>
+                </ul>
+            </div>
+
+            <div class="note">
+                <strong>Campos preenchidos pela API (não enviar):</strong>
+                <ul>
+                    <li><code>codprop</code>, <code>proprietario</code> e <code>carro</code> - Vêm sempre do cadastro do veículo: o proprietário atual do veículo e a descrição do modelo. Se forem enviados, são ignorados.</li>
+                    <li><code>codigo</code> - Número da O.S, gerado como o próximo número livre (mesma sequência do sistema principal). Enviar este campo gera erro.</li>
+                    <li><code>abertura</code>, <code>dtsituacao</code> e <code>hrsituacao</code> - Data/hora atual, quando não informados.</li>
+                    <li>Totais da capa (<code>valorpeca</code>, <code>valormo</code>, <code>valormost</code>, <code>descitens*</code>, <code>custoitens*</code>) - Recalculados a partir dos itens.</li>
+                </ul>
+            </div>
+
+            <div class="filters">
+                <strong>Campos de cada item:</strong>
+                <ul>
+                    <li><code>descricao</code> - <strong>Obrigatório.</strong> Descrição do item.</li>
+                    <li><code>quant</code> - <strong>Obrigatório.</strong> Quantidade, maior que zero.</li>
+                    <li><code>pecamo</code> - <strong>Obrigatório.</strong> <code>A</code> = peça, <code>B</code> = mão de obra.</li>
+                    <li><code>unidade</code> - Unidade do item (ex.: <code>PC</code>). Mão de obra (<code>B</code>) usa <code>MO</code> ou <code>ST</code> (serviço de terceiros); peça (<code>A</code>) não pode usar <code>MO</code> nem <code>ST</code>.</li>
+                    <li><code>valunit</code> - Valor unitário.</li>
+                    <li><code>pecacod</code> - Código da peça/serviço cadastrado. Omitir ou enviar <code>0</code> para item avulso.</li>
+                    <li><code>descval</code> - Valor de desconto do item (opcional).</li>
+                </ul>
+                <p>Não enviar <code>id</code>, <code>numos</code>, <code>item</code>, <code>dtestoque</code> nem <code>usuario</code>: são preenchidos pela API.</p>
             </div>
 
             <div class="example">
                 <strong>Exemplo de JSON:</strong>
                 <div class="endpoint-route">
 {
-  "capa": {
-    "placa": "XXX1234",
-    "codprop": 10,
-    "mecanico": 1,
-    "tipoos": 1,
-    "situacao": 1
-  },
+  "capa": [
+    {
+      "placa": "IKJ 3847",
+      "mecanico": 1,
+      "tipoos": 1
+    }
+  ],
   "itens": [
     {
-      "codigo_peca": 100,
-      "quantidade": 2,
-      "valor_unitario": 50.00
+      "pecacod": 100,
+      "descricao": "FILTRO DE OLEO",
+      "pecamo": "A",
+      "unidade": "PC",
+      "quant": 2,
+      "valunit": 50.00
     },
     {
-      "codigo_peca": 101,
-      "quantidade": 1,
-      "valor_unitario": 150.00
+      "descricao": "TROCA DE OLEO",
+      "pecamo": "B",
+      "unidade": "MO",
+      "quant": 1,
+      "valunit": 80.00
     }
   ]
 }
                 </div>
+            </div>
+
+            <div class="example">
+                <strong>Exemplo mínimo (só a capa):</strong>
+                <div class="endpoint-route">
+{
+  "capa": [ { "placa": "IKJ 3847" } ],
+  "itens": []
+}
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Erros comuns (HTTP 400):</strong>
+                <ul>
+                    <li>Veículo não informado, não cadastrado ou sem cliente vinculado.</li>
+                    <li>Mecânico ou tipo de O.S não encontrado, inativo ou não habilitado para O.S.</li>
+                    <li><code>situacao</code> diferente de <code>"Orçamento"</code>.</li>
+                    <li>Datas futuras, data de abertura em branco ou data da situação anterior à abertura.</li>
+                </ul>
             </div>
         </section>
 
@@ -91,7 +152,7 @@ BaseRoute/consulta/os/capa/?page=1&limit=20&plate=XXX 1234&mechanic=Rogerio
             <div class="endpoint-route">
                 BaseRoute/cadastro/os/completa/:codigo_da_OS
             </div>
-            
+
             <div class="filters">
                 <strong>Parâmetros:</strong>
                 <ul>
@@ -99,23 +160,64 @@ BaseRoute/consulta/os/capa/?page=1&limit=20&plate=XXX 1234&mechanic=Rogerio
                 </ul>
             </div>
 
+            <div class="filters">
+                <strong>Header opcional:</strong>
+                <ul>
+                    <li><code>X-Device-Id</code> - Identificador da sessão/dispositivo do app, usado na checagem de concorrência.</li>
+                </ul>
+            </div>
+
+            <div class="filters">
+                <strong>Campos da capa:</strong>
+                <ul>
+                    <li><code>alterou</code> - <code>true</code> para gravar as alterações da capa. Sem ele, só os itens são processados.</li>
+                    <li><code>dtHrInicio</code> - Opcional (ISO 8601). Data/hora em que o app abriu a O.S para edição. Se outro usuário tiver alterado a O.S depois disso, a API recusa com <strong>409</strong>.</li>
+                    <li><code>situacao</code> - <code>Em Execução</code>, <code>Orçamento</code>, <code>Aguardando Peça</code>, <code>Concluída</code> ou <code>Cancelada</code>. <code>Faturada</code> não é aceita (só pela rotina de faturamento). Ao mudar a situação sem enviar <code>dtsituacao</code>, a data da situação passa a ser hoje; ao concluir, a data de entrega é preenchida se estiver vazia.</li>
+                    <li><code>mecanico</code> e <code>tipoos</code> - Código ou descrição, com as mesmas regras do cadastro.</li>
+                    <li>Demais campos da O.S que se deseja alterar.</li>
+                </ul>
+                <p><code>veiculo</code>, <code>placa</code>, <code>codprop</code>, <code>proprietario</code> e <code>carro</code> não mudam depois que a O.S foi aberta: se enviados, são ignorados.</p>
+            </div>
+
+            <div class="filters">
+                <strong>Itens (cada um com <code>acao</code>):</strong>
+                <ul>
+                    <li><code>"acao": "post"</code> - Inclui um item novo (mesmos campos do cadastro).</li>
+                    <li><code>"acao": "put"</code> - Altera o item informado em <code>id</code>; envie só os campos que mudaram.</li>
+                    <li><code>"acao": "delete"</code> - Exclui o item informado em <code>id</code>.</li>
+                    <li>Itens sem <code>acao</code> são ignorados.</li>
+                </ul>
+            </div>
+
             <div class="example">
                 <strong>Exemplo de JSON:</strong>
                 <div class="endpoint-route">
 {
-  "capa": {
-    "mecanico": 2,
-    "situacao": 3
-  },
-  "itens": [
+  "capa": [
     {
-      "codigo": 1,
-      "quantidade": 3,
-      "valor_unitario": 55.00
+      "alterou": true,
+      "dtHrInicio": "2026-11-12T14:30:00",
+      "mecanico": 2,
+      "situacao": "Em Execução"
     }
+  ],
+  "itens": [
+    { "acao": "put", "id": 1534, "quant": 3, "valunit": 55.00 },
+    { "acao": "post", "descricao": "ALINHAMENTO", "pecamo": "B", "unidade": "ST", "quant": 1, "valunit": 120.00 },
+    { "acao": "delete", "id": 1535 }
   ]
 }
                 </div>
+            </div>
+
+            <div class="note">
+                <strong>Respostas de erro:</strong>
+                <ul>
+                    <li><strong>400</strong> - O.S já faturada, situação inválida, item que não pertence à O.S, mecânico/tipo inválidos ou datas inválidas.</li>
+                    <li><strong>404</strong> - O.S não encontrada.</li>
+                    <li><strong>406</strong> - A O.S está aberta em outro dispositivo.</li>
+                    <li><strong>409</strong> - A O.S foi alterada por outro usuário depois do <code>dtHrInicio</code>.</li>
+                </ul>
             </div>
         </section>
     </div>
